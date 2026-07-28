@@ -1,0 +1,306 @@
+import streamlit as st
+import pandas as pd
+import joblib
+import matplotlib.pyplot as plt
+
+# =========================
+# PAGE CONFIGURATION
+# =========================
+
+st.set_page_config(
+    page_title="Flood Risk Classifier",
+    page_icon="🌊",
+    layout="wide"
+)
+
+# =========================
+# LOAD TRAINED MODEL
+# =========================
+
+model = joblib.load("models/flood_model.pkl")
+
+# =========================
+# SIDEBAR
+# =========================
+
+st.sidebar.title("📊 Model Information")
+st.sidebar.success("Algorithm: Random Forest Classifier")
+st.sidebar.info("Dataset Size: 50,000 Records")
+st.sidebar.write("20 Environmental & Infrastructure Factors")
+st.sidebar.markdown("---")
+st.sidebar.caption(
+    "This application is intended for educational and demonstration purposes. Predictions are based on the trained machine learning model and should not replace official flood warnings or environmental assessments."
+)
+
+# =========================
+# TITLE
+# =========================
+
+st.title("🌊 Flood Risk Classifier")
+
+st.markdown("""
+This application predicts flood risk using environmental and infrastructure-related factors.
+
+**Risk Categories**
+- ✅ Low Risk
+- ⚠️ Medium Risk
+- 🚨 High Risk
+""")
+
+# =========================
+# FEATURE IMPORTANCE
+# =========================
+
+st.subheader("📈 Feature Importance")
+
+importance_df = pd.DataFrame({
+    "Feature": model.feature_names_in_,
+    "Importance": model.feature_importances_
+})
+
+importance_df = importance_df.sort_values(
+    by="Importance",
+    ascending=True
+)
+
+fig, ax = plt.subplots(figsize=(10,7))
+
+ax.barh(
+    importance_df["Feature"],
+    importance_df["Importance"],
+    color="steelblue"
+)
+
+ax.set_xlabel("Importance Score")
+ax.set_title("Most Important Features")
+
+st.pyplot(fig)
+
+st.divider()
+
+# =========================
+# INPUT SECTION
+# =========================
+
+st.subheader("Enter Flood Indicators")
+
+col1, col2 = st.columns(2)
+
+with col1:
+    MonsoonIntensity = st.slider("Monsoon Intensity", 0, 10, 5)
+    TopographyDrainage = st.slider("Topography Drainage", 0, 10, 5)
+    RiverManagement = st.slider("River Management", 0, 10, 5)
+    Deforestation = st.slider("Deforestation", 0, 10, 5)
+    Urbanization = st.slider("Urbanization", 0, 10, 5)
+    ClimateChange = st.slider("Climate Change", 0, 10, 5)
+    DamsQuality = st.slider("Dams Quality", 0, 10, 5)
+    Siltation = st.slider("Siltation", 0, 10, 5)
+    AgriculturalPractices = st.slider("Agricultural Practices", 0, 10, 5)
+    Encroachments = st.slider("Encroachments", 0, 10, 5)
+
+with col2:
+    IneffectiveDisasterPreparedness = st.slider(
+        "Disaster Preparedness",
+        0, 10, 5
+    )
+
+    DrainageSystems = st.slider(
+        "Drainage Systems",
+        0, 10, 5
+    )
+
+    CoastalVulnerability = st.slider(
+        "Coastal Vulnerability",
+        0, 10, 5
+    )
+
+    Landslides = st.slider(
+        "Landslides",
+        0, 10, 5
+    )
+
+    Watersheds = st.slider(
+        "Watersheds",
+        0, 10, 5
+    )
+
+    DeterioratingInfrastructure = st.slider(
+        "Infrastructure Quality",
+        0, 10, 5
+    )
+
+    PopulationScore = st.slider(
+        "Population Score",
+        0, 10, 5
+    )
+
+    WetlandLoss = st.slider(
+        "Wetland Loss",
+        0, 10, 5
+    )
+
+    InadequatePlanning = st.slider(
+        "Inadequate Planning",
+        0, 10, 5
+    )
+
+    PoliticalFactors = st.slider(
+        "Political Factors",
+        0, 10, 5
+    )
+
+# =========================
+# PREDICTION BUTTON
+# =========================
+
+if st.button("🔍 Predict Flood Risk"):
+
+    input_data = pd.DataFrame([[
+        MonsoonIntensity,
+        TopographyDrainage,
+        RiverManagement,
+        Deforestation,
+        Urbanization,
+        ClimateChange,
+        DamsQuality,
+        Siltation,
+        AgriculturalPractices,
+        Encroachments,
+        IneffectiveDisasterPreparedness,
+        DrainageSystems,
+        CoastalVulnerability,
+        Landslides,
+        Watersheds,
+        DeterioratingInfrastructure,
+        PopulationScore,
+        WetlandLoss,
+        InadequatePlanning,
+        PoliticalFactors
+    ]], columns=model.feature_names_in_)
+
+    st.subheader("Input Summary")
+    st.dataframe(input_data)
+
+    prediction = model.predict(input_data)[0]
+
+    probability = model.predict_proba(input_data)[0]
+    confidence = max(probability) * 100
+
+    st.divider()
+    st.subheader("📌 Prediction Result")
+
+    st.metric(
+        "Prediction Confidence",
+        f"{confidence:.2f}%"
+    ) 
+
+    risk_levels = ["Low", "Medium", "High"]
+
+    prob_df = pd.DataFrame({
+        "Risk": risk_levels,
+        "Probability": probability
+    })
+
+    st.bar_chart(
+        prob_df.set_index("Risk")
+)
+
+    if prediction == 0:
+        st.success("✅ LOW FLOOD RISK")
+        st.info("""
+        ### Environmental Assessment
+
+        Current environmental conditions indicate a **low likelihood of flooding**. Existing drainage capacity and environmental resilience appear sufficient under the provided conditions.
+
+        ### Recommended Actions
+
+        - Continue routine inspection and maintenance of drainage infrastructure.
+        - Preserve wetlands and vegetation that naturally absorb excess rainfall.
+        - Monitor seasonal weather forecasts for unusual rainfall patterns.
+        - Encourage responsible land use to minimize future flood vulnerability.
+        """)
+
+    elif prediction == 1:
+        st.warning("⚠️ MEDIUM FLOOD RISK")
+        st.info("""
+        ### Environmental Assessment
+
+        The selected conditions suggest **moderate flood susceptibility**. Increased rainfall, land-use changes, or reduced drainage efficiency could elevate flood risk.
+        
+        ### Recommended Actions
+
+        - Clear blocked drains, culverts, and waterways before heavy rainfall.
+        - Strengthen community flood preparedness and emergency response plans.
+        - Improve stormwater drainage and water retention systems.
+        - Reduce deforestation and promote sustainable urban planning.
+        - Closely monitor weather forecasts during the rainy season.
+        """)
+
+    else:
+        st.error("🚨 HIGH FLOOD RISK")
+        st.info("""
+        ### Environmental Assessment
+
+        The analysis indicates **high flood risk**. Environmental and infrastructure conditions suggest a significant likelihood of flooding if heavy rainfall occurs.
+
+        ### Recommended Actions
+
+        - Activate local emergency preparedness and evacuation procedures.
+        - Relocate residents and valuable assets from flood-prone areas where necessary.
+        - Continuously monitor river levels and official weather advisories.
+        - Deploy temporary flood barriers and inspect critical infrastructure.
+        - Prioritize restoration of drainage systems and reinforce embankments.
+        - Implement long-term mitigation measures such as reforestation, wetland conservation, and improved urban drainage planning.
+    """)
+        
+
+
+# =========================
+# FOOTER
+# =========================
+
+st.divider()
+
+st.markdown("""
+## Developer
+
+### Nike Nsikak-Nelson
+
+An aspiring **Data Scientist and Machine Learning Engineer** passionate about developing intelligent, data-driven solutions to real-world challenges. My interests include machine learning, artificial intelligence, data analytics, and building practical applications that support informed decision-making and improve community resilience.
+
+---
+
+### About This Project
+
+The **Flood Risk Classifier** is a machine learning application designed to predict flood risk using environmental and infrastructure indicators. By analyzing factors such as monsoon intensity, drainage systems, urbanization, climate change, and deforestation, the model classifies locations into **Low**, **Medium**, or **High** flood-risk categories.
+
+The objective of this project is to demonstrate how machine learning can support disaster preparedness, environmental monitoring, and risk assessment by providing timely, data-driven predictions.
+
+#### Technology Stack
+- Python
+- Pandas
+- Scikit-Learn
+- Streamlit
+- Matplotlib
+
+#### Machine Learning Model
+- Random Forest Classifier
+
+#### Dataset
+- 50,000 records
+- 20 environmental and infrastructure features
+
+#### Purpose
+To support flood risk assessment by providing predictive insights that can assist communities, planners, and decision-makers in implementing proactive flood mitigation and preparedness strategies.
+""")
+
+st.markdown("---")
+
+st.markdown(
+    """
+    <div style='text-align: center; font-size: 14px; color: #888888;'>
+        © 2026 | Nike Nsikak-Nelson
+    </div>
+    """,
+    unsafe_allow_html=True
+)
