@@ -93,120 +93,33 @@ st.divider()
 # INPUT SECTION
 # =========================
 
-st.subheader("Enter Flood Indicators")
+st.subheader("📝 Enter Flood Indicators")
 
 col1, col2 = st.columns(2)
 
 with col1:
-    MonsoonIntensity = st.slider(
-    "🌧 Monsoon Intensity",
-    0, 10, 5
-    )
-
-    TopographyDrainage = st.slider(
-    "🏞 Topography Drainage",
-    0, 10, 5
-    )
-
-    RiverManagement = st.slider(
-    "🌊 River Management",
-    0, 10, 5
-    )
-
-    Deforestation = st.slider(
-    "🌳 Deforestation",
-    0, 10, 5
-    )
-
-    Urbanization = st.slider(
-    "🏙 Urbanization",
-    0, 10, 5
-    )
-
-    ClimateChange = st.slider(
-    "🌡 Climate Change",
-    0, 10, 5
-    )
+    MonsoonIntensity = st.slider("🌧 Monsoon Intensity", 0, 10, 5)
+    TopographyDrainage = st.slider("🏞 Topography Drainage", 0, 10, 5)
+    RiverManagement = st.slider("🌊 River Management", 0, 10, 5)
+    Deforestation = st.slider("🌳 Deforestation", 0, 10, 5)
+    Urbanization = st.slider("🏙 Urbanization", 0, 10, 5)
+    ClimateChange = st.slider("🌡 Climate Change", 0, 10, 5)
+    DamsQuality = st.slider("🏗 Dams Quality", 0, 10, 5)
+    Siltation = st.slider("🪨 Siltation", 0, 10, 5)
+    AgriculturalPractices = st.slider("🚜 Agricultural Practices", 0, 10, 5)
+    Encroachments = st.slider("🏠 Encroachments", 0, 10, 5)
 
 with col2:
     IneffectiveDisasterPreparedness = st.slider(
-        "Disaster Preparedness",
-        0, 10, 5
+        "🚨 Disaster Preparedness", 0, 10, 5
     )
 
     DrainageSystems = st.slider(
-        "Drainage Systems",
-        0, 10, 5
+        "🚰 Drainage Systems", 0, 10, 5
     )
 
     CoastalVulnerability = st.slider(
-        "Coastal Vulnerability",
-        0, 10, 5
-    )
-
-    Landslides = st.slider(
-        "Landslides",
-        0, 10, 5
-    )
-
-    Watersheds = st.slider(
-        "Watersheds",
-        0, 10, 5
-    )
-
-    DeterioratingInfrastructure = st.slider(
-        "Infrastructure Quality",
-        0, 10, 5
-    )
-
-    PopulationScore = st.slider(
-        "Population Score",
-        0, 10, 5
-    )
-
-    WetlandLoss = st.slider(
-        "Wetland Loss",
-        0, 10, 5
-    )
-
-    InadequatePlanning = st.slider(
-        "Inadequate Planning",
-        0, 10, 5
-    )
-
-    PoliticalFactors = st.slider(
-        "Political Factors",
-        0, 10, 5
-    )
-
-    DamsQuality = st.slider(
-        "🏗 Dams Quality", 
-        0, 10, 5
-    )
-    
-    Siltation = st.slider(
-        "🪨 Siltation", 
-        0, 10, 5
-    )
-
-    AgriculturalPractices = st.slider(
-        "🚜 Agricultural Practices", 
-        0, 10, 5
-    )
-    
-    Encroachments = st.slider(
-        "🏠 Encroachments", 
-        0, 10, 5
-    )
-    
-    DrainageSystems = st.slider(
-        "🚰 Drainage Systems", 
-        0, 10, 5
-    )
-
-    CoastalVulnerability = st.slider(
-        "🌊 Coastal Vulnerability", 
-        0, 10, 5
+        "🌊 Coastal Vulnerability", 0, 10, 5
     )
 
     Landslides = st.slider(
@@ -214,22 +127,27 @@ with col2:
     )
 
     Watersheds = st.slider(
-        "💧 Watersheds", 
-        0, 10, 5
+        "💧 Watersheds", 0, 10, 5
+    )
+
+    DeterioratingInfrastructure = st.slider(
+        "🏗 Infrastructure Quality", 0, 10, 5
     )
 
     PopulationScore = st.slider(
-        "👥 Population Score", 
-        0, 10, 5
+        "👥 Population Score", 0, 10, 5
     )
 
     WetlandLoss = st.slider(
         "🌿 Wetland Loss", 0, 10, 5
     )
 
+    InadequatePlanning = st.slider(
+        "📋 Inadequate Planning", 0, 10, 5
+    )
+
     PoliticalFactors = st.slider(
-        "🏛 Political Factors", 
-        0, 10, 5
+        "🏛 Political Factors", 0, 10, 5
     )
 
 # =========================
