@@ -42,6 +42,18 @@ st.sidebar.caption(
 
 st.title("🌊 Flood Risk Classifier")
 
+col1, col2, col3 = st.columns(3)
+
+with col1:
+    st.metric("Records", "50,000")
+
+with col2:
+    st.metric("Features", "20")
+
+with col3:
+    st.metric("Model", "Random Forest")
+
+
 st.markdown("""
 ### Intelligent Flood Risk Assessment System
 
@@ -94,6 +106,10 @@ st.divider()
 # =========================
 
 st.subheader("📝 Enter Flood Indicators")
+
+st.caption(
+    "Adjust the environmental and infrastructure factors below, then click Predict Flood Risk."
+)
 
 col1, col2 = st.columns(2)
 
@@ -155,6 +171,8 @@ with col2:
 # =========================
 
 if st.button("🔍 Predict Flood Risk"):
+
+    from datetime import datetime
 
     input_data = pd.DataFrame([[
         MonsoonIntensity,
@@ -257,28 +275,22 @@ if st.button("🔍 Predict Flood Risk"):
         - Implement long-term mitigation measures such as reforestation, wetland conservation, and improved urban drainage planning.
     """)
         
+    st.caption(
+    f"Prediction generated on {datetime.now().strftime('%d %B %Y %H:%M')}"
+)
 
 
 # =========================
-# FOOTER
+# ABOUT PROJECT
 # =========================
 
 st.divider()
 
-st.markdown("""
-## Developer
+with st.expander("ℹ️ About This Project"):
+    st.markdown("""
+### Flood Risk Classifier
 
-### Nike Nsikak-Nelson
-
-An aspiring **Data Scientist and Machine Learning Engineer** passionate about developing intelligent, data-driven solutions to real-world challenges. My interests include machine learning, artificial intelligence, data analytics, and building practical applications that support informed decision-making and improve community resilience.
-
----
-
-### About This Project
-
-The **Flood Risk Classifier** is a machine learning application designed to predict flood risk using environmental and infrastructure indicators. By analyzing factors such as monsoon intensity, drainage systems, urbanization, climate change, and deforestation, the model classifies locations into **Low**, **Medium**, or **High** flood-risk categories.
-
-The objective of this project is to demonstrate how machine learning can support disaster preparedness, environmental monitoring, and risk assessment by providing timely, data-driven predictions.
+The Flood Risk Classifier uses machine learning to predict flood risk based on environmental and infrastructure indicators.
 
 #### Technology Stack
 - Python
@@ -295,14 +307,16 @@ The objective of this project is to demonstrate how machine learning can support
 - 20 environmental and infrastructure features
 
 #### Purpose
-To support flood risk assessment by providing predictive insights that can assist communities, planners, and decision-makers in implementing proactive flood mitigation and preparedness strategies.
+To support flood risk assessment by providing predictive insights that help communities and decision-makers prepare for potential flood events.
 """)
+
+# True Footer
 
 st.markdown("---")
 
 st.markdown(
     """
-    <div style='text-align: center; font-size: 14px; color: #888888;'>
+    <div style='text-align:center; color:gray; padding:10px;'>
         © 2026 | Nike Nsikak-Nelson
     </div>
     """,
