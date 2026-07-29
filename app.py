@@ -24,7 +24,11 @@ model = joblib.load("models/flood_model.pkl")
 # =========================
 
 st.sidebar.title("📊 Model Information")
-st.sidebar.success("Algorithm: Random Forest Classifier")
+st.sidebar.markdown("""
+### 🤖 Machine Learning Model
+
+**Random Forest Classifier**
+""")
 st.sidebar.info("Dataset Size: 50,000 Records")
 st.sidebar.write("20 Environmental & Infrastructure Factors")
 st.sidebar.markdown("---")
@@ -39,12 +43,19 @@ st.sidebar.caption(
 st.title("🌊 Flood Risk Classifier")
 
 st.markdown("""
+### Intelligent Flood Risk Assessment System
+
+This machine learning application evaluates environmental and infrastructure factors
+to classify flood risk as Low, Medium, or High.
+""")
+
+st.markdown("""
 This application predicts flood risk using environmental and infrastructure-related factors.
 
 **Risk Categories**
-- ✅ Low Risk
-- ⚠️ Medium Risk
-- 🚨 High Risk
+- 🟢 Low Risk
+- 🟡 Medium Risk
+- 🔴 High Risk
 """)
 
 # =========================
@@ -87,16 +98,35 @@ st.subheader("Enter Flood Indicators")
 col1, col2 = st.columns(2)
 
 with col1:
-    MonsoonIntensity = st.slider("Monsoon Intensity", 0, 10, 5)
-    TopographyDrainage = st.slider("Topography Drainage", 0, 10, 5)
-    RiverManagement = st.slider("River Management", 0, 10, 5)
-    Deforestation = st.slider("Deforestation", 0, 10, 5)
-    Urbanization = st.slider("Urbanization", 0, 10, 5)
-    ClimateChange = st.slider("Climate Change", 0, 10, 5)
-    DamsQuality = st.slider("Dams Quality", 0, 10, 5)
-    Siltation = st.slider("Siltation", 0, 10, 5)
-    AgriculturalPractices = st.slider("Agricultural Practices", 0, 10, 5)
-    Encroachments = st.slider("Encroachments", 0, 10, 5)
+    MonsoonIntensity = st.slider(
+    "🌧 Monsoon Intensity",
+    0, 10, 5
+    )
+
+    TopographyDrainage = st.slider(
+    "🏞 Topography Drainage",
+    0, 10, 5
+    )
+
+    RiverManagement = st.slider(
+    "🌊 River Management",
+    0, 10, 5
+    )
+
+    Deforestation = st.slider(
+    "🌳 Deforestation",
+    0, 10, 5
+    )
+
+    Urbanization = st.slider(
+    "🏙 Urbanization",
+    0, 10, 5
+    )
+
+    ClimateChange = st.slider(
+    "🌡 Climate Change",
+    0, 10, 5
+    )
 
 with col2:
     IneffectiveDisasterPreparedness = st.slider(
@@ -146,6 +176,59 @@ with col2:
 
     PoliticalFactors = st.slider(
         "Political Factors",
+        0, 10, 5
+    )
+
+    DamsQuality = st.slider(
+        "🏗 Dams Quality", 
+        0, 10, 5
+    )
+    
+    Siltation = st.slider(
+        "🪨 Siltation", 
+        0, 10, 5
+    )
+
+    AgriculturalPractices = st.slider(
+        "🚜 Agricultural Practices", 
+        0, 10, 5
+    )
+    
+    Encroachments = st.slider(
+        "🏠 Encroachments", 
+        0, 10, 5
+    )
+    
+    DrainageSystems = st.slider(
+        "🚰 Drainage Systems", 
+        0, 10, 5
+    )
+
+    CoastalVulnerability = st.slider(
+        "🌊 Coastal Vulnerability", 
+        0, 10, 5
+    )
+
+    Landslides = st.slider(
+        "⛰ Landslides", 0, 10, 5
+    )
+
+    Watersheds = st.slider(
+        "💧 Watersheds", 
+        0, 10, 5
+    )
+
+    PopulationScore = st.slider(
+        "👥 Population Score", 
+        0, 10, 5
+    )
+
+    WetlandLoss = st.slider(
+        "🌿 Wetland Loss", 0, 10, 5
+    )
+
+    PoliticalFactors = st.slider(
+        "🏛 Political Factors", 
         0, 10, 5
     )
 
@@ -206,7 +289,8 @@ if st.button("🔍 Predict Flood Risk"):
 )
 
     if prediction == 0:
-        st.success("✅ LOW FLOOD RISK")
+        st.success("🟢 LOW FLOOD RISK")
+        st.progress(25)
         st.info("""
         ### Environmental Assessment
 
@@ -221,7 +305,8 @@ if st.button("🔍 Predict Flood Risk"):
         """)
 
     elif prediction == 1:
-        st.warning("⚠️ MEDIUM FLOOD RISK")
+        st.warning("🟡 MEDIUM FLOOD RISK")
+        st.progress(60)
         st.info("""
         ### Environmental Assessment
 
@@ -237,7 +322,8 @@ if st.button("🔍 Predict Flood Risk"):
         """)
 
     else:
-        st.error("🚨 HIGH FLOOD RISK")
+        st.error("🔴 HIGH FLOOD RISK")
+        st.progress(95)
         st.info("""
         ### Environmental Assessment
 
