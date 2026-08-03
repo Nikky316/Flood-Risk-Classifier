@@ -56,3 +56,10 @@ streamlit run app.py
 ## Developer
 
 Nike Nsikak-Nelson
+
+
+## Copyright
+
+© 2026 Nike Nsikak-Nelson. All rights reserved.
+
+This project and its source code are the intellectual property of Nike Nsikak-Nelson. Unauthorized reproduction, redistribution, or commercial use without permission is prohibited.
